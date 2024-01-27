@@ -1,3 +1,4 @@
+import { Utils } from "@/utils";
 import { ErrorReporterCustom } from "@/validation/ErrorReporter";
 import { registerSchema } from "@/validation/registerSchema";
 import vine, { errors } from "@vinejs/vine";
@@ -6,12 +7,16 @@ import { NextResponse, NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
 	try {
 		const data = await req.json();
+
 		// custom error reporter
 		vine.errorReporter = () => new ErrorReporterCustom();
 		// compile and validate
 		const validator = vine.compile(registerSchema);
 		// validated data
 		const payload = await validator.validate(data);
+
+		// hashing password with synchronous way
+		payload.password = await Utils.hashPassword(payload.password);
 
 		return NextResponse.json({ status: 200, payload });
 	} catch (error) {
