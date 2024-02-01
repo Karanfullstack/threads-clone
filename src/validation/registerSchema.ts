@@ -6,3 +6,8 @@ export const registerSchema = vine.object({
 	email: vine.string().email(),
 	password: vine.string().minLength(4).confirmed(),
 });
+
+export const loginSchemaValidation = vine.object({
+	email: vine.string().email(),
+	password: vine.string(),
+});

@@ -6,4 +6,11 @@ export class Utils {
 		const hashedPassword = bcryptjs.hashSync(password, salt);
 		return hashedPassword;
 	}
+	public static async comparePassword(
+		password: string,
+		hashedPassword: string
+	) {
+		const isMatch = await bcryptjs.compare(password, hashedPassword);
+		return isMatch;
+	}
 }
