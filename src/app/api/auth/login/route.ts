@@ -11,20 +11,20 @@ export async function POST(req: NextRequest) {
 		vine.errorReporter = () => new ErrorReporterCustom();
 		const validator = vine.compile(loginSchemaValidation);
 		const payload = await validator.validate(data);
-
+   
 		// checking if user exists
 		const isUser = await prisma.user.findUnique({
 			where: { email: payload.email },
 		});
   if(!isUser){
-    return NextResponse.json({errors:{email:"Invalid Credentials"}},{status:400})
+    return NextResponse.json({errors:{message:"Invalid Credentials"}},{status:400})
   }
   // checking if password match
   const isMatch = await Utils.comparePassword(payload.password, isUser.password as string)
   if(!isMatch){
-    return NextResponse.json({errors:{password:"Invalid Credentials"}},{status:400})
+    return NextResponse.json({errors:{email:"Invalid Credentials"}},{status:400})
   }
-  return NextResponse.json({status:200,message:"Login success",user:isUser},{status:200})
+  return NextResponse.json({status:200,email:"Login success",user:isUser},{status:200})
 	} catch (error) {
   if(error instanceof errors.E_VALIDATION_ERROR){
     return NextResponse.json({errors:error.messages},{status:400})

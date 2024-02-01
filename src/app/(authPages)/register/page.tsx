@@ -138,7 +138,7 @@ const Register = () => {
 						</div>
 						{/* Button */}
 						<div className="mt-5">
-							<Button className="w-full">
+							<Button disabled={loading} className="w-full">
 								{loading ? "Loading...." : "Login"}
 							</Button>
 						</div>

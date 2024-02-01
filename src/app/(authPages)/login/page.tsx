@@ -6,11 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
-import { AuthStateT } from "@/types";
+import { AuthErrorType, AuthStateT } from "@/types";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const Login = () => {
 	const params = useSearchParams();
+	const [loading, setLoading] = useState<boolean>(false);
+	const [error, setError] = useState<AuthErrorType>({})
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
 		password: "",
@@ -18,15 +21,29 @@ const Login = () => {
 
 	// submit handler
 	const submitHandler = (e: FormEvent<HTMLElement>) => {
+		setError({})
 		e.preventDefault();
-		console.log(authState);
+		setLoading(true);
+		axios.post("/api/auth/login", authState).then((res)=>{
+			 const response = res.data;
+				if(response.status == 200){
+						alert("Login Successfull")
+				}
+
+				else if(response.status == 400){
+					setError(response.errors)
+				}
+		}).catch((error)=>{
+			console.log(error)
+			setError(error.response.data.errors)
+		}).finally(()=>setLoading(false))
 	};
 	return (
 		<main className=" bg-background">
 			<section className="w-screen h-screen flex justify-center relative items-center">
 				{params.get("message") && (
 					<div className="flex justify-center w-full absolute top-10 ">
-						<span className="bg-green-300 p-3 mt-20 rounded-lg text-center font-semibold  max-w-lg w-full">
+						<span className="bg-green-200 p-3 mt-20 rounded-lg text-center font-semibold  max-w-md w-full">
 							{params.get("message")}
 						</span>
 					</div>
@@ -55,6 +72,7 @@ const Login = () => {
 									setAuthState({ ...authState, email: e.target.value })
 								}
 							/>
+							<span className="text-red-300 fontsemibold">{error?.email}</span>
 						</div>
 						{/* password */}
 						<div className="mt-5">
@@ -67,6 +85,7 @@ const Login = () => {
 									setAuthState({ ...authState, password: e.target.value })
 								}
 							/>
+							<span className="text-red-300 fontsemibold">{error?.password}</span>
 						</div>
 						{/* Button */}
 						<div className="mt-5">
