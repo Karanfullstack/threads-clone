@@ -56,11 +56,11 @@ export async function POST(req: NextRequest) {
 		);
 	} catch (error) {
 		if (error instanceof errors.E_VALIDATION_ERROR) {
-			return NextResponse.json({ errors: error.messages }, { status: 400 });
+			return NextResponse.json({ status:400, errors: error.messages }, { status: 400 });
 		}
 		return NextResponse.json(
-			{ message: "server error-line", errors:(error as Error).message },
-			{ status: 500 }
+			{ status:400, message: "server error-line", errors:(error as Error).message },
+			{ status: 400 }
 		);
 	}
 }

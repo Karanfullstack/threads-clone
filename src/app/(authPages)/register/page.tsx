@@ -6,9 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
-import { AuthStateT } from "@/types";
+import { AuthErrorType, AuthStateT } from "@/types";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+	const router = useRouter();
+	const [loading, setLoading] = useState<boolean>(false);
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
 		password: "",
@@ -16,11 +20,30 @@ const Register = () => {
 		username: "",
 		password_confirmation: "",
 	});
+	const [error, setError] = useState<AuthErrorType>({});
 
 	// submit handler
 	const submitHandler = (e: FormEvent<HTMLElement>) => {
 		e.preventDefault();
+		setLoading(true);
+		setError({});
 		console.log(authState);
+		axios
+			.post("/api/auth/register", authState)
+			.then((res) => {
+				const response = res.data;
+				if (response.status == 200) {
+					console.log(response)
+					router.push(`/login?message=${response.message}`);
+				} else if(response.status == 400){
+					 setError(response.errors)
+				}
+			})
+			.catch((error) => {
+				console.log(error.response.status);
+				setError(error.response.data.errors);
+			})
+			.finally(() => setLoading(false));
 	};
 	return (
 		<main className=" bg-background">
@@ -49,6 +72,9 @@ const Register = () => {
 									setAuthState({ ...authState, name: e.target.value })
 								}
 							/>
+							<span className="text-red-400 text-xs font-bold">
+								{error?.name}
+							</span>
 						</div>
 						{/* username */}
 						<div className="mt-5">
@@ -61,6 +87,9 @@ const Register = () => {
 									setAuthState({ ...authState, username: e.target.value })
 								}
 							/>
+							<span className="text-red-400 text-xs font-bold">
+								{error?.username}
+							</span>
 						</div>
 						{/* email */}
 						<div className="mt-5">
@@ -73,6 +102,9 @@ const Register = () => {
 									setAuthState({ ...authState, email: e.target.value })
 								}
 							/>
+							<span className="text-red-400 text-xs font-bold">
+								{error?.email}
+							</span>
 						</div>
 						{/* password */}
 						<div className="mt-5">
@@ -85,6 +117,9 @@ const Register = () => {
 									setAuthState({ ...authState, password: e.target.value })
 								}
 							/>
+							<span className="text-red-400 text-xs font-bold">
+								{error?.password}
+							</span>
 						</div>
 						{/* confirm password */}
 						<div className="mt-5">
@@ -103,7 +138,9 @@ const Register = () => {
 						</div>
 						{/* Button */}
 						<div className="mt-5">
-							<Button className="w-full">Login</Button>
+							<Button className="w-full">
+								{loading ? "Loading...." : "Login"}
+							</Button>
 						</div>
 					</form>
 

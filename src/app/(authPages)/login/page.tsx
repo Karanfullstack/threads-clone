@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { AuthStateT } from "@/types";
+import { useSearchParams } from "next/navigation";
 
 const Login = () => {
+	const params = useSearchParams();
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
 		password: "",
@@ -21,7 +23,14 @@ const Login = () => {
 	};
 	return (
 		<main className=" bg-background">
-			<section className="w-screen h-screen flex justify-center items-center">
+			<section className="w-screen h-screen flex justify-center relative items-center">
+				{params.get("message") && (
+					<div className="flex justify-center w-full absolute top-10 ">
+						<span className="bg-green-300 p-3 mt-20 rounded-lg text-center font-semibold  max-w-lg w-full">
+							{params.get("message")}
+						</span>
+					</div>
+				)}
 				<div className="w-full md:w-1/3 bg-muted h-full md:max-h-max rounded-lg mx-2 p-6">
 					{/* Logo */}
 					<div className="flex justify-center">

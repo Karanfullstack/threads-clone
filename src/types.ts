@@ -5,3 +5,10 @@ export type AuthStateT = {
 	username?: string;
 	password_confirmation?: string;
 };
+
+export type AuthErrorType = {
+	email?: string;
+	password?: string;
+	name?: string;
+	username?: string;
+};
