@@ -9,11 +9,12 @@ import { type FormEvent, useState } from "react";
 import { AuthErrorType, AuthStateT } from "@/types";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
 	const params = useSearchParams();
 	const [loading, setLoading] = useState<boolean>(false);
-	const [error, setError] = useState<AuthErrorType>({})
+	const [error, setError] = useState<AuthErrorType>({});
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
 		password: "",
@@ -21,22 +22,30 @@ const Login = () => {
 
 	// submit handler
 	const submitHandler = (e: FormEvent<HTMLElement>) => {
-		setError({})
+		setError({});
 		e.preventDefault();
 		setLoading(true);
-		axios.post("/api/auth/login", authState).then((res)=>{
-			 const response = res.data;
-				if(response.status == 200){
-						alert("Login Successfull")
+		axios
+			.post("/api/auth/login", authState)
+			.then((res) => {
+				const response = res.data;
+				if (response.status == 200) {
+					alert("Login Successfull");
+					signIn("credentials", {
+						email: authState.email,
+						password: authState.password,
+						callbackUrl: "/",
+						redirect: true,
+					});
+				} else if (response.status == 400) {
+					setError(response.errors);
 				}
-
-				else if(response.status == 400){
-					setError(response.errors)
-				}
-		}).catch((error)=>{
-			console.log(error)
-			setError(error.response.data.errors)
-		}).finally(()=>setLoading(false))
+			})
+			.catch((error) => {
+				console.log(error);
+				setError(error.response.data.errors);
+			})
+			.finally(() => setLoading(false));
 	};
 	return (
 		<main className=" bg-background">
@@ -85,11 +94,15 @@ const Login = () => {
 									setAuthState({ ...authState, password: e.target.value })
 								}
 							/>
-							<span className="text-red-300 fontsemibold">{error?.password}</span>
+							<span className="text-red-300 fontsemibold">
+								{error?.password}
+							</span>
 						</div>
 						{/* Button */}
 						<div className="mt-5">
-							<Button className="w-full">Login</Button>
+							<Button disabled={loading} className="w-full">
+								{loading ? "Loading.." : "Login"}
+							</Button>
 						</div>
 					</form>
 
