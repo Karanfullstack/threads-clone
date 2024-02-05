@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { ThemeToogle } from "./ThemeToggle";
+import SignOut from "./SignOut";
 export default function NavList() {
 	const path = usePathname();
 	return (
@@ -53,9 +54,7 @@ export default function NavList() {
 					</Link>
 				</li>
 				<li className="flex items-center gap-3 bottom-10  absolute">
-					<div>
-						<Button>Signout</Button>
-					</div>
+					<SignOut />
 					<ThemeToogle />
 				</li>
 			</ul>

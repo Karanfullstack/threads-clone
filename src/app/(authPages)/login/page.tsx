@@ -5,21 +5,29 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { AuthErrorType, AuthStateT } from "@/types";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
 	const params = useSearchParams();
+	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<AuthErrorType>({});
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
 		password: "",
 	});
-
+	const { data, status, update } = useSession();
+	
+	useEffect(() => {
+		if (status === "authenticated") {
+			router.replace("/login");
+		}
+	}, [status]);
 	// submit handler
 	const submitHandler = (e: FormEvent<HTMLElement>) => {
 		setError({});
@@ -34,6 +42,8 @@ const Login = () => {
 					signIn("credentials", {
 						email: authState.email,
 						password: authState.password,
+						callbackUrl: "/",
+						redirect: true,
 					});
 				} else if (response.status == 400) {
 					setError(response.errors);
