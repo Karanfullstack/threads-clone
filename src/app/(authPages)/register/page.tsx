@@ -5,13 +5,15 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect } from "react";
 import { AuthErrorType, AuthStateT } from "@/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
 	const router = useRouter();
+
+	console.log(status);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
@@ -33,10 +35,10 @@ const Register = () => {
 			.then((res) => {
 				const response = res.data;
 				if (response.status == 200) {
-					console.log(response)
+					console.log(response);
 					router.push(`/login?message=${response.message}`);
-				} else if(response.status == 400){
-					 setError(response.errors)
+				} else if (response.status == 400) {
+					setError(response.errors);
 				}
 			})
 			.catch((error) => {

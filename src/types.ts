@@ -12,3 +12,7 @@ export type AuthErrorType = {
 	name?: string;
 	username?: string;
 };
+
+export type PostErrorType = {
+	content?: string;
+};

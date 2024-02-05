@@ -13,4 +13,7 @@ export class Utils {
 		const isMatch = await bcryptjs.compare(password, hashedPassword);
 		return isMatch;
 	}
+	public static bytesToMb(bytes: number) {
+		return bytes / 1024 / 1024;
+	}
 }

@@ -4,11 +4,11 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // custom types for session and user
-type CustomSessionType = {
+export type CustomSessionType = {
 	user?: CustomUserType;
 	expires: ISODateString;
 };
-type CustomUserType = {
+export type CustomUserType = {
 	id?: string | null;
 	name?: string | null;
 	email?: string | null;

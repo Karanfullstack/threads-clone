@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-
+import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
 	title: "Threads",
 	description: "Threads is a social media platform for sharing text posts.",
@@ -20,6 +20,7 @@ export default function FrontLayout({
 			disableTransitionOnChange
 		>
 			{children}
+			<Toaster />
 		</ThemeProvider>
 	);
 }
