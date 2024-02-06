@@ -42,13 +42,16 @@ export default function AddThread() {
 					setContent("");
 					setImageUrl(null);
 					setFile(null);
-					router.refresh();
+
 					toast({
 						title: "success",
 						description: "Post created successfully",
 						className: "bg-green-500 text-white",
 						duration: 2000,
 					});
+					setTimeout(() => {
+						window.location.reload();
+					}, 500);
 				}
 			})
 			.catch((err) => {

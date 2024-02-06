@@ -1,8 +1,32 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/options";
 import BaseComponent from "@/components/base/BaseComponent";
+import logo from "../../../public/logo.svg";
+import AddThread from "@/components/threads/AddThread";
+import PostCard from "@/components/common/PostCard";
+import Image from "next/image";
+import { getPosts } from "@/lib/serverMethods";
+import { PostType } from "@/types";
 
 export default async function Home() {
-	const session = await getServerSession(authOptions);
-	return <BaseComponent />;
+	const posts: Array<PostType> = await getPosts();
+	console.log(posts);
+	return (
+		<BaseComponent>
+			<div className="flex justify-center items-center">
+				<Image
+					className="hidden md:block"
+					src={logo}
+					height={40}
+					width={40}
+					alt="logo"
+				/>
+			</div>
+			<AddThread />
+
+			<div>
+				{posts.map((item: PostType) => (
+					<PostCard post={item} key={item.id} />
+				))}
+			</div>
+		</BaseComponent>
+	);
 }

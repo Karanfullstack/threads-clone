@@ -16,3 +16,18 @@ export type AuthErrorType = {
 export type PostErrorType = {
 	content?: string;
 };
+
+export type PostType = {
+	id: number;
+	content: string;
+	image: string;
+	createdAt: string;
+	user_id: number;
+	user: UserType;
+};
+
+export type UserType = {
+	id: number;
+	name: string;
+	username: string;
+};

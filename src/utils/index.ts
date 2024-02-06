@@ -1,5 +1,5 @@
 import bcryptjs from "bcryptjs";
-
+import moment from "moment";
 export class Utils {
 	public static async hashPassword(password: string) {
 		const salt = bcryptjs.genSaltSync(10);
@@ -15,5 +15,8 @@ export class Utils {
 	}
 	public static bytesToMb(bytes: number) {
 		return bytes / 1024 / 1024;
+	}
+	public static formatDaate(date: string) {
+		return moment(date).fromNow();
 	}
 }

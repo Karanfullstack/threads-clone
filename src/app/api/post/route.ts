@@ -9,12 +9,14 @@ import { join } from "path";
 import { writeFile } from "fs/promises";
 import { prisma } from "@/DB/dbconfig";
 
+// POST /api/post
 export async function POST(request: NextRequest) {
 	try {
 		// checking if your is logged in
 		const session: CustomSessionType | null = await getServerSession(
 			authOptions
 		);
+
 		if (!session) {
 			return NextResponse.json({ status: 400, message: "Unauthorized" });
 		}
@@ -44,7 +46,7 @@ export async function POST(request: NextRequest) {
 					errors: { content: isValidImage },
 				});
 			}
-	// upload image if all good
+			// upload image if all good
 			const buffer = Buffer.from(await image!.arrayBuffer());
 			const uploadDir = join(process.cwd(), "public", "/uploads");
 			const imgExt = image?.name.split(".");
@@ -53,8 +55,7 @@ export async function POST(request: NextRequest) {
 			await writeFile(join(uploadDir, imgName), buffer);
 		}
 
-	
-
+		// saving post to database
 		const newPost = await prisma.post.create({
 			data: {
 				content: payload.content,
@@ -69,12 +70,44 @@ export async function POST(request: NextRequest) {
 			message: "Post Created Successfully",
 		});
 	} catch (error) {
-		console.log("myError...", error);
 		if (error instanceof errors.E_VALIDATION_ERROR) {
 			return NextResponse.json(
 				{ status: 400, errors: error.messages },
 				{ status: 200 }
 			);
 		}
+	}
+}
+
+// GET /api/post
+
+export async function GET(request: NextRequest) {
+	try {
+		const session: CustomSessionType | null = await getServerSession(
+			authOptions
+		);
+		console.log(session);
+		if (!session) {
+			return NextResponse.json({ status: 400, message: "Unauthorized User" });
+		}
+		// getting all post from database
+		const posts = await prisma.post.findMany({
+			include: {
+				user: {
+					select: {
+						id: true,
+						name: true,
+						username: true,
+					},
+				},
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+
+		return NextResponse.json({ status: 200, success: true, data: posts });
+	} catch (error) {
+		return NextResponse.json({ status: 400, message: "Server Error", error });
 	}
 }

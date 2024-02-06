@@ -1,21 +1,22 @@
 import React from "react";
 import UserAvatar from "./UserAvatar";
 import { MoreHorizontal } from "lucide-react";
+import { PostType, UserType } from "@/types";
+import { Utils } from "@/utils";
 
-const PostBar = () => {
+const PostBar = ({ post }: { post: PostType }) => {
 	return (
 		<div className="flex space-x-2 mt-6 justify-between items-center">
-			
 			<div className="flex space-x-3 items-start">
-   <UserAvatar name="karan" image="" />
-   <div className="flex flex-col">
-				<strong>Tushar</strong>
-				<span>@tushar</span>
+				<UserAvatar name={post.user.name} image="" />
+				<div className="flex flex-col">
+					<strong>{post.user.name}</strong>
+					<span>@{post.user.username}</span>
+				</div>
 			</div>
-   </div>
 			<div className="flex items-center space-x-2">
-				<span>23 min</span>
-    <MoreHorizontal/>
+				<span>{Utils.formatDaate(post.createdAt)}</span>
+				<MoreHorizontal />
 			</div>
 		</div>
 	);
