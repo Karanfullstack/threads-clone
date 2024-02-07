@@ -1,4 +1,3 @@
-import BaseComponent from "@/components/base/BaseComponent";
 import logo from "../../../public/logo.svg";
 import AddThread from "@/components/threads/AddThread";
 import PostCard from "@/components/common/PostCard";
@@ -8,9 +7,9 @@ import { PostType } from "@/types";
 
 export default async function Home() {
 	const posts: Array<PostType> = await getPosts();
-	console.log(posts);
+	
 	return (
-		<BaseComponent>
+		<div>
 			<div className="flex justify-center items-center">
 				<Image
 					className="hidden md:block"
@@ -27,6 +26,6 @@ export default async function Home() {
 					<PostCard post={item} key={item.id} />
 				))}
 			</div>
-		</BaseComponent>
+		</div>
 	);
 }

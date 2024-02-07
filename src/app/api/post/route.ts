@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
 		const session: CustomSessionType | null = await getServerSession(
 			authOptions
 		);
-		console.log(session);
+
 		if (!session) {
 			return NextResponse.json({ status: 400, message: "Unauthorized User" });
 		}

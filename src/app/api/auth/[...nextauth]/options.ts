@@ -16,13 +16,12 @@ export type CustomUserType = {
 	image?: string | null;
 };
 
-
 // auth options
 export const authOptions: AuthOptions = {
 	// pages for loging or signing in
 	pages: {
 		signIn: "/login",
-		newUser:"/register",
+		newUser: "/register",
 	},
 	callbacks: {
 		async jwt({ token, user }) {
@@ -32,7 +31,6 @@ export const authOptions: AuthOptions = {
 			return token;
 		},
 
-
 		// session callback to	add user to session
 		async session({
 			session,
@@ -41,7 +39,7 @@ export const authOptions: AuthOptions = {
 		}: {
 			session: CustomSessionType;
 			token: JWT;
-			user: User;
+			user: CustomUserType;
 		}) {
 			session.user = token.user as CustomUserType;
 			return session;

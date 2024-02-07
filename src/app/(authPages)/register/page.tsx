@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { type FormEvent, useState, useEffect } from "react";
+import { type FormEvent, useState } from "react";
 import { AuthErrorType, AuthStateT } from "@/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -29,7 +29,7 @@ const Register = () => {
 		e.preventDefault();
 		setLoading(true);
 		setError({});
-		console.log(authState);
+
 		axios
 			.post("/api/auth/register", authState)
 			.then((res) => {
