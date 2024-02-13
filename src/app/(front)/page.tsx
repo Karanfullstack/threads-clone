@@ -2,12 +2,12 @@ import logo from "../../../public/logo.svg";
 import AddThread from "@/components/threads/AddThread";
 import PostCard from "@/components/common/PostCard";
 import Image from "next/image";
-import { getPosts } from "@/lib/serverMethods";
+import { getPosts, getUserPosts } from "@/lib/serverMethods";
 import { PostType } from "@/types";
 
 export default async function Home() {
 	const posts: Array<PostType> = await getPosts();
-	
+
 	return (
 		<div>
 			<div className="flex justify-center items-center">

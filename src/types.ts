@@ -27,7 +27,9 @@ export type PostType = {
 };
 
 export type UserType = {
-	id: number;
-	name: string;
-	username: string;
+	id?: number;
+	name?: string;
+	username?: string;
+	email?: string;
+	image?: string;
 };

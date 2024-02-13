@@ -6,9 +6,6 @@ export async function getPosts() {
 		const res = await fetch(`${Env.APP_URL}/api/post`, {
 			headers: headers(),
 			cache: "no-cache",
-			next: {
-				revalidate: 3600,
-			},
 		});
 		if (!res.ok) throw new Error("Failed to fetch data");
 		const response = await res.json();
@@ -17,3 +14,4 @@ export async function getPosts() {
 		throw error;
 	}
 }
+// something changed
