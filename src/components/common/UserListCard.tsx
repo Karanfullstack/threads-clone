@@ -10,6 +10,7 @@ export default function UserListCard() {
 					<UserAvatar name="Karan" image="" />
 					<div className="flex flex-col">
 						<strong>Karan</strong>
+
 						<span className=" font-light text-xs">@karan211</span>
 					</div>
 				</div>
