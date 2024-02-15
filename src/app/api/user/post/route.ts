@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({
 			status: 200,
 			message: "Post Fetched Successfully",
-			post,
+			data: post,
 		});
 	} catch (error) {
 		return NextResponse.json({

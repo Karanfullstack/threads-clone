@@ -14,4 +14,18 @@ export async function getPosts() {
 		throw error;
 	}
 }
-// something changed
+
+// get user posts
+export async function getUserPosts() {
+	try {
+		const res = await fetch(`${Env.APP_URL}/api/user/post`, {
+			headers: headers(),
+			cache: "no-cache",
+		});
+		if (!res.ok) throw new Error("Failed to fetch data");
+		const response = await res.json();
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}

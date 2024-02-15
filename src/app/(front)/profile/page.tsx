@@ -3,19 +3,21 @@ import {
 	authOptions,
 } from "@/app/api/auth/[...nextauth]/options";
 import UserAvatar from "@/components/common/UserAvatar";
-import { MoveLeft } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PostType } from "@/types";
+import { getUserPosts } from "@/lib/serverMethods";
+import PostCard from "@/components/common/PostCard";
+import DynamicArrow from "@/components/common/DynamicArrow";
 
 export default async function page() {
 	const session: CustomSessionType | null = await getServerSession(authOptions);
-
+	const posts: Array<PostType> | [] = await getUserPosts();
+	console.log(posts);
 	return (
 		<section>
-			<div className="flex  space-x-4 items-center">
-				<MoveLeft size={30} width={30} className="cursor-pointer" />
-				<h1 className="font-bold text-xl">Profile</h1>
-			</div>
+			{/* dynamic arrow */}
+			<DynamicArrow title="Profile" />
 			<div className="flex  items-center space-x-2">
 				<UserAvatar
 					name="karan"
@@ -29,7 +31,7 @@ export default async function page() {
 					<p className="text-xl">{session?.user?.email}</p>
 				</div>
 			</div>
-			<div className="mt-6 border">
+			<div className="mt-6">
 				<Tabs defaultValue="posts" className="w-full ">
 					<TabsList className="w-full">
 						<TabsTrigger className="w-full" value="posts">
@@ -40,7 +42,14 @@ export default async function page() {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="posts">
-						Make changes to your account here.
+						{posts && posts.length < 1 && (
+							<h1 className="mt-5 text-center text-xl font-bold">
+								No Post Found
+							</h1>
+						)}
+						{posts?.map((item) => (
+							<PostCard post={item} key={item.id} />
+						))}
 					</TabsContent>
 					<TabsContent value="comments">Change your password here.</TabsContent>
 				</Tabs>
