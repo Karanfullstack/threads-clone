@@ -5,14 +5,16 @@ import {
 import UserAvatar from "@/components/common/UserAvatar";
 import { getServerSession } from "next-auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PostType } from "@/types";
-import { getUserPosts } from "@/lib/serverMethods";
+import { CommentType, PostType } from "@/types";
+import { getUserComments, getUserPosts } from "@/lib/serverMethods";
 import PostCard from "@/components/common/PostCard";
 import DynamicArrow from "@/components/common/DynamicArrow";
+import Comments from "@/components/common/Comments";
 
 export default async function page() {
 	const session: CustomSessionType | null = await getServerSession(authOptions);
 	const posts: Array<PostType> | [] = await getUserPosts();
+	const comments: Array<CommentType> | [] = await getUserComments();
 
 	return (
 		<section>
@@ -51,7 +53,11 @@ export default async function page() {
 							<PostCard post={item} key={item.id} />
 						))}
 					</TabsContent>
-					<TabsContent value="comments">Change your password here.</TabsContent>
+					<TabsContent value="comments">
+						{comments.map((comment: CommentType) => (
+							<Comments comment={comment} />
+						))}
+					</TabsContent>
 				</Tabs>
 			</div>
 		</section>

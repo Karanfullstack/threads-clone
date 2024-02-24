@@ -62,3 +62,18 @@ export async function getPostById(id: number) {
 		throw error;
 	}
 }
+
+// get User's Comments
+
+export async function getUserComments() {
+	try {
+		const res = await fetch(`${Env.APP_URL}/api/user/comment`, {
+			headers: headers(),
+			cache: "no-cache",
+		});
+		const response = await res.json();
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}

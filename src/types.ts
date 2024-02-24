@@ -22,8 +22,10 @@ export type PostType = {
 	content: string;
 	image: string;
 	createdAt: string;
-	user_id: number;
-	user: UserType;
+	user_id?: number;
+	user?: UserType;
+	comments?:	CommentType[];
+	comment_count?:number;
 };
 
 export type UserType = {
@@ -37,7 +39,7 @@ export type UserType = {
 export type CommentType = {
 	id: number;
 	content: string;
-	createdAt: string;
+	created_at: string;
 	user_id: number;
 	post_id: number;
 	user: UserType;

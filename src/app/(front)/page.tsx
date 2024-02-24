@@ -23,7 +23,7 @@ export default async function Home() {
 
 			<div>
 				{posts.map((item: PostType) => (
-					<PostCard post={item} key={item.id} />
+					<PostCard post={item} key={item.id} flagLink={false} />
 				))}
 			</div>
 		</div>
