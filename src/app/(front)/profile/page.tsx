@@ -13,7 +13,7 @@ import DynamicArrow from "@/components/common/DynamicArrow";
 export default async function page() {
 	const session: CustomSessionType | null = await getServerSession(authOptions);
 	const posts: Array<PostType> | [] = await getUserPosts();
-	console.log(posts);
+
 	return (
 		<section>
 			{/* dynamic arrow */}

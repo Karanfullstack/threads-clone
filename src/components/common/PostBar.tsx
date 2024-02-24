@@ -1,14 +1,14 @@
 import React from "react";
 import UserAvatar from "./UserAvatar";
 import { MoreHorizontal } from "lucide-react";
-import { PostType, UserType } from "@/types";
+import { PostType } from "@/types";
 import { Utils } from "@/utils";
 
 const PostBar = ({ post }: { post: PostType }) => {
 	return (
 		<div className="flex space-x-2 mt-6 justify-between items-center">
 			<div className="flex space-x-3 items-start">
-				<UserAvatar name={post.user.name} image="" />
+				<UserAvatar name={post?.user?.name || ""} image="" />
 				<div className="flex flex-col">
 					<strong>{post.user.name}</strong>
 					<span>@{post.user.username}</span>

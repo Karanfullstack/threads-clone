@@ -6,7 +6,7 @@ import { getPosts } from "@/lib/serverMethods";
 import { PostType } from "@/types";
 
 export default async function Home() {
-	const posts: Array<PostType> = await getPosts();
+	const posts: Array<PostType> | [] = await getPosts();
 
 	return (
 		<div>

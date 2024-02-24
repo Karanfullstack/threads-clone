@@ -33,3 +33,12 @@ export type UserType = {
 	email?: string;
 	image?: string;
 };
+
+export type CommentType = {
+	id: number;
+	content: string;
+	createdAt: string;
+	user_id: number;
+	post_id: number;
+	user: UserType;
+};

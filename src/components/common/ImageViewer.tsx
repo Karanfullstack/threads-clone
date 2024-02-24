@@ -9,7 +9,6 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import Image from "next/image";
-import ImagePreview from "./ImagePreview";
 
 export default function ImageViewer({ image }: { image: string }) {
 	return (
