@@ -1,36 +1,30 @@
-import {
-	CustomSessionType,
-	authOptions,
-} from "@/app/api/auth/[...nextauth]/options";
 import UserAvatar from "@/components/common/UserAvatar";
-import { getServerSession } from "next-auth";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CommentType, PostType } from "@/types";
-import { getUserComments, getUserPosts } from "@/lib/serverMethods";
+import { CommentType, ShowUserType } from "@/types";
+import { getUserById } from "@/lib/serverMethods";
 import PostCard from "@/components/common/PostCard";
 import DynamicArrow from "@/components/common/DynamicArrow";
 import Comments from "@/components/common/Comments";
 
-export default async function page() {
-	const session: CustomSessionType | null = await getServerSession(authOptions);
-	const posts: Array<PostType> | [] = await getUserPosts();
-	const comments: Array<CommentType> | [] = await getUserComments();
+export default async function page({ params }: { params: { id: number } }) {
+	const data: ShowUserType | null = await getUserById(params.id);
 
 	return (
 		<section>
 			{/* dynamic arrow */}
-			<DynamicArrow title="Profile" />
+			<DynamicArrow title="User's Profile" />
 			<div className="flex  items-center space-x-2">
 				<UserAvatar
-					name="karan"
+					name={data?.name || "T"}
 					className="text-2xl font-bold h-20 w-20 mt-4"
 					image=""
 				/>
 
 				<div>
-					<h1 className="text-sxl">{session?.user?.name}</h1>
-					<p className="text-md text-orange-300">{session?.user?.username}</p>
-					<p className="text-xl">{session?.user?.email}</p>
+					<h1 className="text-sxl">{data?.name}</h1>
+					<p className="text-md text-orange-300">{data?.username}</p>
+					<p className="text-xl">{data?.email}</p>
 				</div>
 			</div>
 			<div className="mt-6">
@@ -44,20 +38,20 @@ export default async function page() {
 						</TabsTrigger>
 					</TabsList>
 					<TabsContent value="posts">
-						{posts && posts.length < 1 && (
+						{data?.Post && data.Post.length < 1 && (
 							<h1 className="mt-5 text-center text-xl font-bold">
 								No Post Found
 							</h1>
 						)}
-						{posts?.map((item) => (
+						{data?.Post?.map((item) => (
 							<PostCard post={item} key={item.id} />
 						))}
 					</TabsContent>
 					<TabsContent value="comments">
-						{comments.map((comment: CommentType) => (
-							<Comments comment={comment} />
+						{data?.comments?.map((comment: CommentType) => (
+							<Comments comment={comment} key={comment.id} />
 						))}
-						{!comments.length && <h1>No Comments</h1>}
+						{!data?.comments?.length && <h1>No Comments</h1>}
 					</TabsContent>
 				</Tabs>
 			</div>

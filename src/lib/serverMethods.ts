@@ -77,3 +77,19 @@ export async function getUserComments() {
 		throw error;
 	}
 }
+
+// get user by id;
+
+export async function getUserById(id: number) {
+	try {
+		const res = await fetch(`${Env.APP_URL}/api/user/${id}`, {
+			headers: headers(),
+			cache: "no-cache",
+		});
+
+		const response = await res.json();
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}

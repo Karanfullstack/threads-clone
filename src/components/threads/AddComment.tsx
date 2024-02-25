@@ -18,6 +18,7 @@ import { useSession } from "next-auth/react";
 import UserAvatar from "../common/UserAvatar";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function AddComment({ post }: { post: PostType }) {
 	const [content, setContent] = useState<string>("");
@@ -25,7 +26,7 @@ export default function AddComment({ post }: { post: PostType }) {
 	const [errors, setErrors] = useState<PostErrorType>({});
 	const { toast } = useToast();
 	const { data } = useSession();
-
+	const router = useRouter();
 	// handle comment submit
 	const submit = async () => {
 		setLoading(true);
@@ -40,11 +41,13 @@ export default function AddComment({ post }: { post: PostType }) {
 				if (response.status === 400) {
 					setErrors(response.errors);
 				} else if (response.status === 200) {
+					router.refresh();
 					toast({
 						title: "Success",
 						description: response.message,
 						className: "bg-green-500 text-white",
 					});
+
 					setContent("");
 					setErrors({});
 				}

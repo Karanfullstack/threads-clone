@@ -20,7 +20,7 @@ export default async function ShowPost({ params }: { params: { id: number } }) {
 			<div>
 				<span className=" font-bold text-lg">Comments</span>
 				{post?.comments?.map((comment: CommentType) => (
-					<Comments comment={comment} flag={true} />
+					<Comments comment={comment} flag={true} key={comment.id} />
 				))}
 				{post?.comments?.length === 0 && <p>No comments yet</p>}
 			</div>

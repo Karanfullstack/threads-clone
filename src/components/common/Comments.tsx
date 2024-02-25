@@ -3,14 +3,26 @@ import UserAvatar from "./UserAvatar";
 import { CommentType } from "@/types";
 import { Utils } from "@/utils";
 import Link from "next/link";
+import DeleteComment from "../threads/DeleteComment";
+import {
+	CustomSessionType,
+	CustomUserType,
+	authOptions,
+} from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
 
-export default function Comments({
+export default async function Comments({
 	comment,
 	flag,
 }: {
 	comment: CommentType;
 	flag?: boolean;
 }) {
+	const session: CustomSessionType | null = await getServerSession(authOptions);
+
+	const isAuth =
+		session && Number(session.user?.id) === comment.user_id ? true : false;
+
 	return (
 		<div className="mb-3 mt-3">
 			<div className="flex items-center space-x-4">
@@ -26,6 +38,9 @@ export default function Comments({
 						</Link>
 					)}
 					{comment.content}
+					<div className="flex justify-end">
+						{isAuth && <DeleteComment id={comment.id} />}
+					</div>
 				</div>
 			</div>
 		</div>

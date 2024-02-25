@@ -42,7 +42,6 @@ export const authOptions: AuthOptions = {
 			token: JWT;
 			user: CustomUserType;
 		}) {
-			console.log("Token User:", token.user);
 			session.user = token.user as CustomUserType;
 			return session;
 		},

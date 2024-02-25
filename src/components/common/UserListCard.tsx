@@ -3,12 +3,13 @@ import UserAvatar from "./UserAvatar";
 import { Button } from "../ui/button";
 import { UserType } from "@/types";
 
-export default function UserListCard({name, username}:UserType) {
+
+export default function UserListCard({ name, id, username }: UserType) {
 	return (
 		<div className="w-full p-4 mt-5">
 			<div className="flex justify-between items-center shadow-sm  p-2   gap-2">
 				<div className="flex gap-2">
-					<UserAvatar name="Karan" image="" />
+					<UserAvatar name={name || "T"} image="" />
 					<div className="flex flex-col">
 						<strong>{name}</strong>
 
@@ -16,7 +17,7 @@ export default function UserListCard({name, username}:UserType) {
 					</div>
 				</div>
 				<div>
-					<Link href="#">
+					<Link href={`/user/${id}`}>
 						<Button>View</Button>
 					</Link>
 				</div>
