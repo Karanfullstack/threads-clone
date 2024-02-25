@@ -28,13 +28,14 @@ const PostCard = ({
 		} else {
 			linkRef.current?.addEventListener("click", handeleNavigation);
 		}
+
 		return () => {
 			linkRef.current?.removeEventListener("click", handeleNavigation);
 		};
 	}, [flagLink]);
 	return (
 		<div className="pb-4">
-			<PostBar post={post} isAuth={true} />
+			<PostBar post={post} />
 			<div className="mt-5 flex flex-col justify-center items-start">
 				<span
 					ref={linkRef}

@@ -1,7 +1,6 @@
 import { Bell, Home, Search, User2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
 import { ThemeToogle } from "./ThemeToggle";
 import SignOut from "./SignOut";
 export default function NavList() {

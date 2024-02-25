@@ -1,15 +1,15 @@
 import { prisma } from "@/DB/dbconfig";
 import { AuthOptions, User, ISODateString } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import { JWT, getToken } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // custom types for session and user
 export type CustomSessionType = {
-	user?: CustomUserType;
+	user?: CustomUserType | undefined;
 	expires: ISODateString;
 };
 export type CustomUserType = {
-	id?: string | null;
+	id?: string | null | undefined;
 	name?: string | null;
 	email?: string | null;
 	username?: string | null;
@@ -26,7 +26,8 @@ export const authOptions: AuthOptions = {
 	callbacks: {
 		async jwt({ token, user }) {
 			if (user) {
-				token.user = user;
+				token.user = user as CustomUserType;
+				token.id = user.id;
 			}
 			return token;
 		},
@@ -41,6 +42,7 @@ export const authOptions: AuthOptions = {
 			token: JWT;
 			user: CustomUserType;
 		}) {
+			console.log("Token User:", token.user);
 			session.user = token.user as CustomUserType;
 			return session;
 		},

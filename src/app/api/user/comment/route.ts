@@ -34,6 +34,9 @@ export async function GET(req: NextRequest) {
 					},
 				},
 			},
+			orderBy: {
+				id: "desc",
+			},
 		});
 		return NextResponse.json({ status: 200, data: comments });
 	} catch (error) {

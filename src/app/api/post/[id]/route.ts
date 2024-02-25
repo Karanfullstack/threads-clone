@@ -35,6 +35,9 @@ export async function GET(
 							},
 						},
 					},
+					orderBy: {
+						id: "desc",
+					},
 				},
 			},
 		});

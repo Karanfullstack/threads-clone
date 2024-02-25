@@ -3,11 +3,12 @@ import DynamicArrow from "@/components/common/DynamicArrow";
 import PostCard from "@/components/common/PostCard";
 import { getPostById } from "@/lib/serverMethods";
 import { CommentType, PostType } from "@/types";
+import { permanentRedirect } from "next/navigation";
 import React from "react";
 
 export default async function ShowPost({ params }: { params: { id: number } }) {
 	const post: PostType = await getPostById(params.id);
-	console.log(post);
+	if (!post) permanentRedirect("/");
 	return (
 		<div>
 			<DynamicArrow title="back" />
@@ -21,7 +22,7 @@ export default async function ShowPost({ params }: { params: { id: number } }) {
 				{post?.comments?.map((comment: CommentType) => (
 					<Comments comment={comment} flag={true} />
 				))}
-    {post?.comments?.length === 0 && <p>No comments yet</p>}
+				{post?.comments?.length === 0 && <p>No comments yet</p>}
 			</div>
 		</div>
 	);
