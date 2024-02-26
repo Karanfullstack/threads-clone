@@ -1,5 +1,4 @@
 import Env from "@/config/env";
-import { UserType } from "@/types";
 import { headers } from "next/headers";
 
 export async function getPosts() {
@@ -87,6 +86,19 @@ export async function getUserById(id: number) {
 			cache: "no-cache",
 		});
 
+		const response = await res.json();
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}
+
+export async function getNotifications() {
+	try {
+		const res = await fetch(`${Env.APP_URL}/api/notification`, {
+			headers: headers(),
+			cache: "no-cache",
+		});
 		const response = await res.json();
 		return response.data;
 	} catch (error) {

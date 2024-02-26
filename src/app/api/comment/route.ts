@@ -30,8 +30,15 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		// Increment Comment Count In Post
+		await prisma.notification.create({
+			data: {
+				user_id: Number(session.user?.id),
+				content: `${session.user?.name} commented on your post`,
+				toUser_id: Number(payload.toUser_id),
+			},
+		});
 
+		// Increment Comment Count In Post
 		await prisma.post.update({
 			where: {
 				id: Number(payload.post_id),
@@ -50,4 +57,3 @@ export async function POST(req: NextRequest) {
 		}
 	}
 }
-

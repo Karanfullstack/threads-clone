@@ -53,3 +53,12 @@ export type ShowUserType = {
 	Post: PostType[] | [];
 	comments: CommentType[] | [];
 };
+
+export type NotificationType = {
+	id: string;
+	content: string;
+	user_id: number;
+	toUser_id: number;
+	created_at: string;
+	user: UserType;
+};

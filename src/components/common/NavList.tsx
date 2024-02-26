@@ -32,7 +32,7 @@ export default function NavList() {
 				</li>
 				<li className=" w-fit mt-6">
 					<Link
-						href="/notifications"
+						href="/notification"
 						className={`flex items-center hover:font-bold justify-start space-x-4 ${
 							path === "/notifications" && "font-bold"
 						}`}

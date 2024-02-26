@@ -16,6 +16,7 @@ model User {
   password String?
   Post Post[]
   comments Comment[]
+  notifications Notification []
   createdAt DateTime @default(now())
 }
 
@@ -38,6 +39,15 @@ model Comment {
   post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   post_id Int
   user_id Int
+}
+
+model Notification {
+  id String @id @default(uuid())
+  content String
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id Int
+  toUser_id Int
+  created_at DateTime @default(now())
 }
 
 

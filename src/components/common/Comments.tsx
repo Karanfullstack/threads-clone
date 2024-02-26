@@ -24,20 +24,23 @@ export default async function Comments({
 		session && Number(session.user?.id) === comment.user_id ? true : false;
 
 	return (
-		<div className="mb-3 mt-3">
-			<div className="flex items-center space-x-4">
+		<div className="mb-3 mt-3 w-full ">
+			<div className="flex items-center space-x-4 ">
 				<UserAvatar name={comment?.user?.name || ""} image="" />
-				<div className=" rounded-md w-full bg-muted p-4">
-					<div className="flex justify-between items-start w-full">
+				<div className=" rounded-md w-full bg-muted p-4 ">
+					<div className="flex justify-between items-center w-full ">
 						<span>@{comment.user.username}</span>
 						<span>{Utils.formatDaate(comment.created_at)}</span>
 					</div>
 					{!flag && (
-						<Link href={`/post/${comment.post_id}`} className="w-full">
+						<Link
+							href={`/post/${comment.post_id}`}
+							className="w-full cursor-pointer   "
+						>
 							{comment.content}
 						</Link>
 					)}
-					{comment.content}
+					{flag	&& <p>{comment.content}</p>}
 					<div className="flex justify-end">
 						{isAuth && <DeleteComment id={comment.id} />}
 					</div>
