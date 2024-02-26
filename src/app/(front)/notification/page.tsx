@@ -7,11 +7,13 @@ import React from "react";
 
 export default async function page() {
 	const notifications: NotificationType[] | [] = await getNotifications();
-	console.log(notifications);
+
 	return (
 		<div>
 			<DynamicArrow title="Notifications" />
-			{!notifications.length && <h1 className="mt-5 text-xl">No Notification</h1>}
+			{!notifications.length && (
+				<h1 className="mt-5 text-xl">No Notification</h1>
+			)}
 			{notifications?.map((item: NotificationType) => (
 				<div className="flex items-start mt-4 space-x-4">
 					<UserAvatar name={item?.user?.name || "R"} image="" />

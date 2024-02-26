@@ -105,3 +105,18 @@ export async function getNotifications() {
 		throw error;
 	}
 }
+
+// Search Users;
+
+export async function getExplore(query: string) {
+	try {
+		const res = await fetch(`${Env.APP_URL}/api/explore?query=${query}`, {
+			headers: headers(),
+			cache: "no-cache",
+		});
+		const response = await res.json();
+		return response.data;
+	} catch (error) {
+		throw error;
+	}
+}

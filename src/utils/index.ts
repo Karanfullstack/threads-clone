@@ -19,4 +19,9 @@ export class Utils {
 	public static formatDaate(date: string) {
 		return moment(date).fromNow();
 	}
+
+	// replace space to dash
+	public static replaceSpaces(str: string, replacement: string) {
+		return str.replace(/ /g, replacement);
+	}
 }
