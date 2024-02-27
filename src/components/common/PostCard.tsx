@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import PostBar from "./PostBar";
-import { Heart, SendHorizonal } from "lucide-react";
+import { Heart } from "lucide-react";
 import { PostType } from "@/types";
 import ImageViewer from "./ImageViewer";
 import AddComment from "../threads/AddComment";
 import { useRouter } from "next/navigation";
+import SharePost from "./SharePost";
 
 const PostCard = ({
 	post,
@@ -33,6 +34,7 @@ const PostCard = ({
 			linkRef.current?.removeEventListener("click", handeleNavigation);
 		};
 	}, [flagLink]);
+
 	return (
 		<div className="pb-4">
 			<PostBar post={post} />
@@ -47,7 +49,8 @@ const PostCard = ({
 				<div className="flex  w-full space-x-5 ml-3">
 					<Heart width={20} height={20} className=" cursor-pointer" />
 					<AddComment post={post} />
-					<SendHorizonal width={20} height={20} className=" cursor-pointer" />
+					{/* share post */}
+					<SharePost url={`http://localhost:3000/${post.id.toString()}`} />
 				</div>
 				<div className="mt-3 w-full space-x-3">
 					<span>{post.comment_count} replies</span>

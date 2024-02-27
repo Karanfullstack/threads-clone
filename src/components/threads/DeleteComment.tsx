@@ -28,7 +28,6 @@ export default function DeleteComment({ id }: { id: number }) {
 					toast({
 						title: "Deleted",
 						description: response.message,
-						className: "bg-green-300",
 					});
 					router.refresh();
 				}

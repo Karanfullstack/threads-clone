@@ -46,8 +46,6 @@ export default function AddThread() {
 					toast({
 						title: "success",
 						description: "Post created successfully",
-						className: "bg-green-500 text-white",
-						duration: 2000,
 					});
 					setTimeout(() => {
 						window.location.reload();

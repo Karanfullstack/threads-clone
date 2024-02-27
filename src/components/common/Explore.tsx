@@ -20,7 +20,7 @@ export default function Explore() {
 					type="text"
 					className=" bg-muted rounded-2xl h-14 p-3 outline-none w-full "
 					value={query}
-					onChange={(e) => setQuery(Utils.replaceSpaces(e.target.value,"-"))}
+					onChange={(e) => setQuery(Utils.replaceSpaces(e.target.value, "-"))}
 				/>
 			</form>
 		</div>

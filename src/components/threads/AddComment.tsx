@@ -46,7 +46,6 @@ export default function AddComment({ post }: { post: PostType }) {
 					toast({
 						title: "Success",
 						description: response.message,
-						className: "bg-green-500 text-white",
 					});
 
 					setContent("");
