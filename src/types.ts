@@ -26,6 +26,8 @@ export type PostType = {
 	user?: UserType;
 	comments?: CommentType[];
 	comment_count?: number;
+	like_count?:number;
+	likes: Array<LikePostType> | [];
 };
 
 export type UserType = {
@@ -61,4 +63,19 @@ export type NotificationType = {
 	toUser_id: number;
 	created_at: string;
 	user: UserType;
+};
+
+export type LikeType = {
+	id: number;
+	toUser_id?: number;
+	post_id: number;
+	created_at: string;
+	user?: UserType;
+	status?: boolean;
+};
+
+export type LikePostType = {
+	id: number;
+	post_id: number;
+	user_id: number;
 };

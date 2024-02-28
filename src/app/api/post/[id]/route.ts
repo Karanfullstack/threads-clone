@@ -13,6 +13,9 @@ export async function GET(
 	{ params }: { params: { id: number } }
 ) {
 	try {
+		const session: CustomSessionType | null = await getServerSession(
+			authOptions
+		);
 		const post = await prisma.post.findUnique({
 			where: {
 				id: Number(params.id),
@@ -37,6 +40,12 @@ export async function GET(
 					},
 					orderBy: {
 						id: "desc",
+					},
+				},
+				likes: {
+					take: 1,
+					where: {
+						user_id: Number(session?.user?.id),
 					},
 				},
 			},

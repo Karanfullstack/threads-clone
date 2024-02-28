@@ -100,7 +100,14 @@ export async function GET(request: NextRequest) {
 						username: true,
 					},
 				},
+				likes: {
+					take: 1,
+					where: {
+						user_id: Number(session.user?.id),
+					},
+				},
 			},
+
 			orderBy: {
 				createdAt: "desc",
 			},
@@ -112,5 +119,4 @@ export async function GET(request: NextRequest) {
 	}
 }
 
-
-// 
+//

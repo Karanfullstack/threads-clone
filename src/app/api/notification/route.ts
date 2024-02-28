@@ -27,7 +27,13 @@ export async function GET(req: NextRequest) {
 				},
 			},
 		});
-
+		await prisma.notification.deleteMany({
+			where: {
+				created_at: {
+					lte: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 2),
+				},
+			},
+		});
 		return NextResponse.json({
 			status: 200,
 			message: "success",

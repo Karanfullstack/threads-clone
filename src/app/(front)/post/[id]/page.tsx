@@ -8,17 +8,18 @@ import React from "react";
 
 export default async function ShowPost({ params }: { params: { id: number } }) {
 	const post: PostType = await getPostById(params.id);
+	 console.log(post);
 	if (!post) permanentRedirect("/");
 	return (
 		<div>
 			<DynamicArrow title="back" />
-			{post && (
-				<div className="mt-7">
-					<PostCard post={post} flagLink={true} />
-				</div>
-			)}
+
+			<div className="mt-7">
+				<PostCard post={post} flagLink={true} />
+			</div>
+
 			<div>
-				<span className=" font-bold text-lg">Comments</span>
+				<span className="font-bold text-lg">Comments</span>
 				{post?.comments?.map((comment: CommentType) => (
 					<Comments comment={comment} flag={true} key={comment.id} />
 				))}
