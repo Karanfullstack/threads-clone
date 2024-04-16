@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 			},
 		});
 
-		console.log(isLiked);
+	
 
 		if (isLiked) {
 			await prisma.like.delete({

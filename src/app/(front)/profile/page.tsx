@@ -53,7 +53,7 @@ export default async function page() {
 							<PostCard post={item} key={item.id} />
 						))}
 					</TabsContent>
-					<TabsContent value="comments" >
+					<TabsContent value="comments">
 						{comments.map((comment: CommentType) => (
 							<Comments comment={comment} key={comment.id} />
 						))}
