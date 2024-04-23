@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import {
 	CustomSessionType,
 	authOptions,
@@ -6,7 +6,7 @@ import {
 import { getServerSession } from "next-auth";
 import { prisma } from "@/DB/dbconfig";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
 	try {
 		const session: CustomSessionType | null = await getServerSession(
 			authOptions
@@ -40,6 +40,9 @@ export async function GET(req: NextRequest) {
 		});
 		return NextResponse.json({ status: 200, data: comments });
 	} catch (error) {
-		NextResponse.json({ status: 401, message: (error as Error).message });
+		return NextResponse.json({
+			status: 401,
+			message: (error as Error).message,
+		});
 	}
 }

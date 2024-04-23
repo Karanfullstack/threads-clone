@@ -1,8 +1,9 @@
 import { prisma } from "@/DB/dbconfig";
-import { AuthOptions, User, ISODateString } from "next-auth";
-import { JWT, getToken } from "next-auth/jwt";
+import { AuthOptions, ISODateString } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import dotenv from "dotenv";
+dotenv.config();
 // custom types for session and user
 export type CustomSessionType = {
 	user?: CustomUserType | undefined;
@@ -58,23 +59,30 @@ export const authOptions: AuthOptions = {
 			},
 			async authorize(credentials, req) {
 				// database operation for user
-				const user = await prisma.user.findUnique({
-					where: { email: credentials?.email },
-					select: {
-						id: true,
-						email: true,
-						username: true,
-						name: true,
-					},
-				});
+				try {
+					const user = await prisma.user.findUnique({
+						where: { email: credentials?.email },
+						select: {
+							id: true,
+							email: true,
+							username: true,
+							name: true,
+						},
+					});
 
-				// return user if found
-				if (user) {
-					return { ...user, id: user.id.toString() };
-				} else {
+					if (user) {
+						return { ...user, id: user.id.toString() };
+					} else {
+						return null;
+					}
+				} catch (error) {
+					console.error("Error during authentication:", error);
 					return null;
 				}
 			},
 		}),
 	],
+	secret: process.env.NEXTAUTH_SECRET,
+
+	
 };

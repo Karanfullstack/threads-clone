@@ -15,7 +15,7 @@ export default async function page() {
 				<h1 className="mt-5 text-xl">No Notification</h1>
 			)}
 			{notifications?.map((item: NotificationType) => (
-				<div className="flex items-start mt-4 space-x-4">
+				<div key={item.id} className="flex items-start mt-4 space-x-4">
 					<UserAvatar name={item?.user?.name || "R"} image="" />
 					<div className=" bg-muted w-full rounded-lg p-4">
 						<div className="flex justify-between items-start w-full">

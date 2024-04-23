@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 const Register = () => {
 	const router = useRouter();
 
-	console.log(status);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [authState, setAuthState] = useState<AuthStateT>({
 		email: "",
