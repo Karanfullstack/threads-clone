@@ -67,11 +67,10 @@ const PostCard = ({
 				{post.image && <ImageViewer image={post.image} />}
 				<div className="flex  w-full space-x-5 ml-3">
 					<Heart
-						fill={post?.likes?.length > 0 ? "#FF8383" : ""}
-						stroke="#FF8383"
+						fill={post?.likes?.length > 0 ? "#FF8383" : "#ffff"}
 						width={20}
 						height={20}
-						className=" cursor-pointer"
+						className=" cursor-pointer "
 						onClick={handelLike}
 					/>
 					<AddComment post={post} />
